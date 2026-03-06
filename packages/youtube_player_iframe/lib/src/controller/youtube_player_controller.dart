@@ -113,12 +113,19 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
       StreamController.broadcast();
   YoutubePlayerValue _value = YoutubePlayerValue();
 
+  /// The aspect ratio of the video. Defaults to 16/9. Youtube Shorts to 9/16.
+  double? _aspectRatio;
+
   /// A Stream of [YoutubePlayerValue], which allows you to subscribe to changes
   /// in the controller value.
   Stream<YoutubePlayerValue> get stream => _valueController.stream;
 
   /// The [YoutubePlayerValue].
   YoutubePlayerValue get value => _value;
+
+  double get aspectRatio => _aspectRatio ?? 16 / 9;
+
+  set aspectRatio(double value) => _aspectRatio = value;
 
   @override
   Future<void> cuePlaylist({
@@ -340,6 +347,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     double? playbackRate,
     String? playbackQuality,
     YoutubeError? error,
+    double? aspectRatio,
     YoutubeMetaData? metaData,
   }) {
     if (_valueController.isClosed) return;
